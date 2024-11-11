@@ -1,0 +1,28 @@
+#include <msp430.h>
+#include "stateMachines.h"
+
+
+void
+__interrupt_vec(WDT_VECTOR) WDT(){
+  static char blink_count = 0;
+  switch_state_advance();
+  if (++blink_count == 10){ 
+    led_state_advance(); //when the led state machine is used to blink back and forth
+    blink_count = 0;
+  }
+
+  /* if (switch_state == 2) {
+    if (direction == 1) {         // If direction is increasing
+      period -= step;           // Decrease period to increase frequency
+      if (period <= 500) {      // Upper limit for the frequency
+	direction = -1;       // Switch to decreasing frequency
+      }
+    } else {                      // If direction is decreasing
+      period += step;           // Increase period to decrease frequency
+      if (period >= 3000) {     // Lower limit for the frequency
+	direction = 1;        // Switch to increasing frequency
+      }
+    }
+    buzzer_set_period(period);
+    }*/
+}
